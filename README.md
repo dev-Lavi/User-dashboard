@@ -26,30 +26,30 @@ A simple admin dashboard built with **Next.js**, **TypeScript**, and **Tailwind 
 ## 📁 Project Structure
 user-dashboard/
 ├── components/
-│ ├── add-user/
-│ │ ├── Step1BasicInfo.tsx
-│ │ ├── Step2Address.tsx
-│ │ ├── Step3Review.tsx
-│ │ └── AddUserForm.tsx
-│ ├── Loader.tsx
-│ ├── UserCard.tsx
-│ └── SearchBar.tsx
+│   ├── add-user/
+│   │   ├── Step1BasicInfo.tsx
+│   │   ├── Step2Address.tsx
+│   │   └── Step3Review.tsx
+│   ├── AddUserForm.tsx
+│   ├── Loader.tsx
+│   ├── UserCard.tsx
+│   └── SearchBar.tsx
 ├── context/
-│ └── AddUserContext.tsx
+│   └── AddUserContext.tsx
 ├── hooks/
-│ └── useLocalStorage.ts
+│   └── useLocalStorage.ts
 ├── pages/
-│ ├── dashboard/
-│ │ ├── index.tsx
-│ │ └── add.tsx
-│ └── _app.tsx
+│   ├── dashboard/
+│   │   └── index.tsx
+│   ├── add.tsx
+│   └── _app.tsx
 ├── types/
-│ └── user.ts
+│   └── user.ts
 ├── utils/
-│ └── api.ts
+│   └── api.ts
 ├── public/
 ├── styles/
-│ └── globals.css
+│   └── globals.css
 ├── tailwind.config.js
 ├── tsconfig.json
 └── package.json
