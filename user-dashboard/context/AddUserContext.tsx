@@ -1,30 +1,47 @@
-import React, { createContext, useContext, useState } from 'react';
-import { User } from '../types/user';
+import React, { createContext, useContext, useState } from "react"; 
+import { User } from "../types/user";
 
 interface AddUserContextType {
-  user: Partial<User>;
-  setUser: React.Dispatch<React.SetStateAction<Partial<User>>>;
-  step: number;
-  setStep: React.Dispatch<React.SetStateAction<number>>;
+  formData: Partial<User>;
+  setFormData: React.Dispatch<React.SetStateAction<Partial<User>>>;
+  currentStep: number;
+  setCurrentStep: React.Dispatch<React.SetStateAction<number>>;
+  isStep1Valid: boolean;
+  setIsStep1Valid: React.Dispatch<React.SetStateAction<boolean>>;
+  isStep2Valid: boolean;
+  setIsStep2Valid: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const AddUserContext = createContext<AddUserContextType | undefined>(undefined);
 
 export const AddUserProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<Partial<User>>({
-    name: '',
-    email: '',
+  const [formData, setFormData] = useState<Partial<User>>({
+    name: "",
+    email: "",
     address: {
-      street: '',
-      city: '',
-      zipcode: ''
-    }
+      street: "",
+      city: "",
+      zipcode: "",
+    },
   });
 
-  const [step, setStep] = useState<number>(1);
+  const [currentStep, setCurrentStep] = useState<number>(1);
+  const [isStep1Valid, setIsStep1Valid] = useState<boolean>(false);
+  const [isStep2Valid, setIsStep2Valid] = useState<boolean>(false);
 
   return (
-    <AddUserContext.Provider value={{ user, setUser, step, setStep }}>
+    <AddUserContext.Provider
+      value={{
+        formData,
+        setFormData,
+        currentStep,
+        setCurrentStep,
+        isStep1Valid,
+        setIsStep1Valid,
+        isStep2Valid,
+        setIsStep2Valid,
+      }}
+    >
       {children}
     </AddUserContext.Provider>
   );
@@ -33,7 +50,7 @@ export const AddUserProvider = ({ children }: { children: React.ReactNode }) => 
 export const useAddUser = () => {
   const context = useContext(AddUserContext);
   if (!context) {
-    throw new Error('useAddUser must be used within an AddUserProvider');
+    throw new Error("useAddUser must be used within an AddUserProvider");
   }
   return context;
 };
