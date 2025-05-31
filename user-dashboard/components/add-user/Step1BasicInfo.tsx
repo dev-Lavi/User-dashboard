@@ -43,9 +43,6 @@ const Step1BasicInfo = () => {
     <div className="max-w-xl mx-auto bg-white dark:bg-gray-900 text-gray-900 dark:text-white p-6 rounded-xl shadow-lg mt-6">      
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold mb-6 text-purple-600 dark:text-purple-400">Step 1: Basic Info</h2>
-        <button onClick={toggleDarkMode} className="hover:text-purple-400">
-          {darkMode ? <Sun size={24} /> : <Moon size={24} />}
-        </button>
       </div>
 
       <motion.div
