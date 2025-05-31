@@ -39,7 +39,6 @@ const Step2Address = () => {
   useEffect(() => {
     const valid = validate();
     setIsStep2Valid(valid);
-    
   }, [
     formData.address?.street,
     formData.address?.city,
@@ -61,6 +60,11 @@ const Step2Address = () => {
     });
   };
 
+  // Prevent default form submission behavior
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -73,50 +77,56 @@ const Step2Address = () => {
         Step 2: Address
       </h2>
 
-      <div className="mb-5">
-        <label className="block font-semibold mb-1 flex items-center gap-2">
-          <Home size={18} /> Street
-        </label>
-        <input
-          type="text"
-          value={formData.address?.street || ""}
-          onChange={(e) => updateAddressField("street", e.target.value)}
-          className="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
-        />
-        {errors.street && (
-          <p className="text-red-500 text-sm mt-1">{errors.street}</p>
-        )}
-      </div>
+      {/* Wrap inputs in a form to enable Enter submission */}
+      <form onSubmit={handleFormSubmit}>
+        <div className="mb-5">
+          <label className="block font-semibold mb-1 flex items-center gap-2">
+            <Home size={18} /> Street
+          </label>
+          <input
+            type="text"
+            value={formData.address?.street || ""}
+            onChange={(e) => updateAddressField("street", e.target.value)}
+            className="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          />
+          {errors.street && (
+            <p className="text-red-500 text-sm mt-1">{errors.street}</p>
+          )}
+        </div>
 
-      <div className="mb-5">
-        <label className="block font-semibold mb-1 flex items-center gap-2">
-          <MapPin size={18} /> City
-        </label>
-        <input
-          type="text"
-          value={formData.address?.city || ""}
-          onChange={(e) => updateAddressField("city", e.target.value)}
-          className="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
-        />
-        {errors.city && (
-          <p className="text-red-500 text-sm mt-1">{errors.city}</p>
-        )}
-      </div>
+        <div className="mb-5">
+          <label className="block font-semibold mb-1 flex items-center gap-2">
+            <MapPin size={18} /> City
+          </label>
+          <input
+            type="text"
+            value={formData.address?.city || ""}
+            onChange={(e) => updateAddressField("city", e.target.value)}
+            className="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          />
+          {errors.city && (
+            <p className="text-red-500 text-sm mt-1">{errors.city}</p>
+          )}
+        </div>
 
-      <div className="mb-5">
-        <label className="block font-semibold mb-1 flex items-center gap-2">
-          <Mailbox size={18} /> Zip Code
-        </label>
-        <input
-          type="text"
-          value={formData.address?.zipcode || ""}
-          onChange={(e) => updateAddressField("zipcode", e.target.value)}
-          className="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
-        />
-        {errors.zipcode && (
-          <p className="text-red-500 text-sm mt-1">{errors.zipcode}</p>
-        )}
-      </div>
+        <div className="mb-5">
+          <label className="block font-semibold mb-1 flex items-center gap-2">
+            <Mailbox size={18} /> Zip Code
+          </label>
+          <input
+            type="text"
+            value={formData.address?.zipcode || ""}
+            onChange={(e) => updateAddressField("zipcode", e.target.value)}
+            className="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          />
+          {errors.zipcode && (
+            <p className="text-red-500 text-sm mt-1">{errors.zipcode}</p>
+          )}
+        </div>
+        
+        {/* Hidden submit button for Enter key functionality */}
+        <button type="submit" className="hidden">Submit</button>
+      </form>
     </motion.div>
   );
 };

@@ -1,13 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react"; // Added useEffect
 import { AddUserProvider, useAddUser } from "../../context/AddUserContext";
 import Step1BasicInfo from "../../components/add-user/Step1BasicInfo";
 import Step2Address from "../../components/add-user/Step2Address";
 import Step3Review from "../../components/add-user/Step3Review";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const StepRenderer = () => {
+  const router = useRouter();
   const {
     currentStep,
     setCurrentStep,
@@ -26,6 +28,33 @@ const StepRenderer = () => {
 
   const canProceed =
     (currentStep === 1 && isStep1Valid) || (currentStep === 2 && isStep2Valid);
+
+  const handleBack = () => {
+    if (currentStep === 1) {
+      router.push("/dashboard");
+    } else {
+      setCurrentStep((prev) => Math.max(prev - 1, 1));
+    }
+  };
+
+  const handleNext = () => {
+    if (canProceed && currentStep < 3) {
+      setCurrentStep((prev) => Math.min(prev + 1, 3));
+    }
+  };
+
+  // Handle Enter key press for form progression
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Enter" && canProceed && currentStep < 3) {
+        e.preventDefault();
+        handleNext();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [canProceed, currentStep]);
 
   return (
     <div className="relative p-4 max-w-xl mx-auto">
@@ -47,9 +76,8 @@ const StepRenderer = () => {
 
     <div className="mt-4 flex justify-between">
       <button
-        className="px-4 py-2 bg-gray-500 rounded"
-        onClick={() => setCurrentStep((prev) => Math.max(prev - 1, 1))}
-        disabled={currentStep === 1}
+        className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
+        onClick={handleBack}
       >
         Back
       </button>
@@ -59,7 +87,7 @@ const StepRenderer = () => {
           className={`px-4 py-2 rounded text-white ${
             canProceed ? "bg-blue-500 hover:bg-blue-600" : "bg-gray-400 cursor-not-allowed"
           }`}
-          onClick={() => canProceed && setCurrentStep((prev) => Math.min(prev + 1, 3))}
+          onClick={handleNext}
           disabled={!canProceed}
         >
           Next
@@ -68,7 +96,7 @@ const StepRenderer = () => {
 
       {currentStep === 3 && !submitted && (
         <button
-          className="px-4 py-2 bg-green-600 text-white rounded"
+          className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
           onClick={handleSubmit}
         >
           Submit
