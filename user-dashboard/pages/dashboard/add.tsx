@@ -21,7 +21,7 @@ const StepRenderer = () => {
   const handleSubmit = () => {
     console.log("Submitted user data:", formData);
     alert("User data submitted! Check console for output.");
-    setSubmitted(true); // Show Back to Dashboard link
+    setSubmitted(true); 
   };
 
   const canProceed =
@@ -29,7 +29,7 @@ const StepRenderer = () => {
 
   return (
     <div className="relative p-4 max-w-xl mx-auto">
-    {/* Back to Dashboard Button in Top Right */}
+    
     {submitted && currentStep === 3 && (
       <Link
         href="/dashboard"
